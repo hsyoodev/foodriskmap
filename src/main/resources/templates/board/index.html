@@ -37,14 +37,14 @@
                         </li>
                         <br>
                         <li class="nav-item">
-                            <a class="pure-button" href="#">  회원가입 </a>
+                            <a class="pure-button" href="#"> 회원가입 </a>
                         </li>
                     </ul>
                 </nav>
             </div>
         </div>
 
-        
+
 
         <div class="content pure-u-1 pure-u-md-3-4">
             <div>
@@ -56,56 +56,25 @@
                     <section class="post">
                         <header class="post-header">
 
-                            <h2 class="post-title">제목:......</h2>
+                            <!-- 내용 -->
+
+                            <h2 class="post-title">
+                                <td>
+                                    <a th:href="'/board/' + ${board.id}">
+                                        [[ ${board.title} ]]
+                                        ( [[ ${#lists.size(board.comments)} ]] )
+                                    </a>
+                                </td>
+                            </h2>
 
                             <p class="post-meta">
-                                By <a href="#" class="post-author"><td th:text="${board.user.email}"></td></a> <a class="post-category post-category-design"
-                                    href="#">수정</a> <a class="post-category post-category-pure" href="#">작성</a>
-                            </p>
-                        </header>
+                                By <a href="#" class="post-author">
 
-                        <div class="post-description">
-                            <p>
-                                글내용
-                            </p>
-                        </div>
-                    </section>
-                </div>
-               
-                <div class="posts">
-                    <h1 class="content-subhead"></h1>
+                                    <!-- id -->
 
-                    <!-- A single blog post -->
-                    <section class="post">
-                        <header class="post-header">
-
-                            <h2 class="post-title">제목:......</h2>
-
-                            <p class="post-meta">
-                                By <a href="#" class="post-author">Id</a> <a class="post-category post-category-design"
-                                    href="#">수정</a> <a class="post-category post-category-pure" href="#">작성</a>
-                            </p>
-                        </header>
-
-                        <div class="post-description">
-                            <p>
-                                글내용
-                            </p>
-                        </div>
-                    </section>
-                </div>
-                <div class="posts">
-                    <h1 class="content-subhead"></h1>
-
-                    <!-- A single blog post -->
-                    <section class="post">
-                        <header class="post-header">
-
-                            <h2 class="post-title">제목:......</h2>
-
-                            <p class="post-meta">
-                                By <a href="#" class="post-author">Id</a> <a class="post-category post-category-design"
-                                    href="#">수정</a> <a class="post-category post-category-pure" href="#">작성</a>
+                                    <td th:text="${board.user.email}"></td>
+                                </a> <a class="post-category post-category-design" href="#">수정</a> <a
+                                    class="post-category post-category-pure" href="#">작성</a>
                             </p>
                         </header>
 
@@ -118,6 +87,19 @@
                 </div>
 
 
+                <!-- 페이지네이션 -->
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+
+                    <li class="page-item" th:each="num : ${#numbers.sequence(start, end)}">
+                        <a class="page-link" th:href="'/board/list?page=' + ${num}">
+                            [[ ${num} ]]
+                        </a>
+                    </li>
+
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+                <!-- 페이지네이션 끝 -->
 
 
                 <div class="footer">
