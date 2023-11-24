@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <!--  tailwindcss v3.3.5-->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div id="root">
+      <h1 class="hidden">FoodRiskMap</h1>
+      <main>
+        <nav class="absolute top-0 left-0 right-0 z-10">
+          <div class="flex justify-between p-4">
+            <a
+              href="/"
+              class="rounded-full px-3 py-2 text-white bg-rose-600 hover:bg-rose-700 hover:cursor-pointer font-bold"
+            >
+              <div class="flex space-x-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z"
+                  />
+                </svg>
+                <span>FoodRiskMap</span>
+              </div>
+            </a>
+            <a
+              href="/board"
+              class="rounded-full px-3 py-2 text-white bg-rose-600 hover:bg-rose-500 hover:cursor-pointer font-bold"
+            >
+              <div class="flex space-x-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"
+                  />
+                </svg>
+                <span>게시판</span>
+              </div>
+            </a>
+          </div>
+        </nav>
+        <div class="absolute bottom-0 left-0 right-0 z-10">
+          <div class="flex justify-center p-4">
+            <!-- <div class="p-2 rounded-full bg-white"> -->
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input id="all-view" type="checkbox" class="sr-only peer" />
+              <div
+                class="w-14 h-7 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+              ></div>
+              <span class="ms-3 font-bold">전체 보기</span>
+            </label>
+            <!-- </div> -->
+          </div>
+        </div>
+        <div id="map" class="h-screen"></div>
+      </main>
+      <script
+        type="text/javascript"
+        src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=dxkas2z55y"
+      ></script>
+      <script src="/js/map.js"></script>
+    </div>
+  </body>
+</html>
