@@ -1,18 +1,20 @@
+const API_KEY = '5206ab77eeb148fd9ba3';
+
 navigator.geolocation.getCurrentPosition(success, error);
 
 function success(position) {
-  let latitude = position.coords.latitude;
-  let longitude = position.coords.longitude;
-  let latlng = new naver.maps.LatLng(latitude, longitude);
+  const lat = position.coords.latitude;
+  const lng = position.coords.longitude;
+  let latlng = new naver.maps.LatLng(lat, lng);
 
-  // 지도
+  // 지도 생성
   const mapOptions = {
     center: latlng,
-    zoom: 15,
+    zoom: 14,
   };
   const map = new naver.maps.Map('map', mapOptions);
 
-  // 위치
+  // 원(도형) 생성
   const circleOptions = {
     center: latlng,
     map: map,
@@ -21,7 +23,7 @@ function success(position) {
     fillOpacity: 0.8,
   };
   const circle = new naver.maps.Circle(circleOptions);
-  // 반경
+  // 반경 생성
   const radiusOptions = {
     center: latlng,
     map: map,
@@ -30,39 +32,7 @@ function success(position) {
     fillOpacity: 0.3,
   };
   const radius = new naver.maps.Circle(radiusOptions);
-
-  var locationBtnHtml = `<svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke-width="1.5"
-    stroke="currentColor"
-    class="w-6 h-6 m-4"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z"
-    />
-  </svg>`;
-
-  naver.maps.Event.once(map, 'init', function () {
-    var customControl = new naver.maps.CustomControl(locationBtnHtml, {
-      position: naver.maps.Position.RIGHT_CENTER,
-    });
-
-    customControl.setMap(map);
-
-    naver.maps.Event.addDOMListener(
-      customControl.getElement(),
-      'click',
-      function () {
-        map.setCenter(new naver.maps.LatLng(latitude, longitude));
-      }
-    );
-  });
-
-  // 상/하/좌/우 keydown 시 위치,반경 이동
+  // 새로운 위치로 원(도형),반경 이동
   naver.maps.Event.addListener(map, 'keydown', (event) => {
     const key = event.keyboardEvent.key;
     const { lat: newLat, lon: newLon } = calculateCoordinates(
@@ -73,14 +43,41 @@ function success(position) {
     );
 
     latlng = new naver.maps.LatLng(newLat, newLon);
-
+    circle.setCenter(latlng);
+    radius.setCenter(latlng);
+  });
+  // 클릭한 지점으로 원(도형),반경 이동
+  naver.maps.Event.addListener(map, 'click', function (e) {
+    latlng = e.coord;
     circle.setCenter(latlng);
     radius.setCenter(latlng);
   });
 
-  // keyup 시 변경된 위치로 이동
-  naver.maps.Event.addListener(map, 'keyup', (event) => {
+  // 지정한 위치로 지도를 이동
+  naver.maps.Event.addListener(map, 'keyup', () => {
     map.panTo(latlng);
+  });
+  // 위치 버튼 클릭 시 처음 위치로 이동
+  naver.maps.Event.once(map, 'init', function () {
+    // 위치 버튼 생성
+    const locationBtnHtml = `<button type="button" class="p-1 bg-white hover:bg-slate-200 mr-2 ">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+      </svg>
+    </button>`;
+    const customControl = new naver.maps.CustomControl(locationBtnHtml, {
+      position: naver.maps.Position.RIGHT_CENTER,
+    });
+    customControl.setMap(map);
+
+    // 처음 위치로 이동
+    naver.maps.Event.addDOMListener(customControl.getElement(), 'click', () => {
+      latlng = new naver.maps.LatLng(lat, lng);
+      circle.setCenter(latlng);
+      radius.setCenter(latlng);
+      map.setCenter(new naver.maps.LatLng(lat, lng));
+    });
   });
 }
 
