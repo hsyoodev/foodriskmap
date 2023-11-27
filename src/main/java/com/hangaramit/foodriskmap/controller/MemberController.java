@@ -29,8 +29,8 @@ public class MemberController {
         if (joinMember != null) {
             String joinPwd = member.getPwd();
             String memberPwd = member.getPwd();
-            boolean isMatch = passwordEncoder.matches(memberPwd, joinPwd);
-            session.setAtrribute("member_info", member);
+//            boolean isMatch = passwordEncoder.matches(memberPwd, joinPwd);
+//            session.setAtrribute("member_info", member);
         }
         return "redirect:/";
     }
