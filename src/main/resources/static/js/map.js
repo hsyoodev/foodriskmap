@@ -10,14 +10,14 @@ function success(position) {
     center: latlng,
     zoom: 15,
   };
-  const map = new naver.maps.Map("map", mapOptions);
+  const map = new naver.maps.Map('map', mapOptions);
 
   // 위치
   const circleOptions = {
     center: latlng,
     map: map,
     radius: 25,
-    fillColor: "crimson",
+    fillColor: 'crimson',
     fillOpacity: 0.8,
   };
   const circle = new naver.maps.Circle(circleOptions);
@@ -26,7 +26,7 @@ function success(position) {
     center: latlng,
     map: map,
     radius: 1000,
-    fillColor: "crimson",
+    fillColor: 'crimson',
     fillOpacity: 0.3,
   };
   const radius = new naver.maps.Circle(radiusOptions);
@@ -46,7 +46,7 @@ function success(position) {
     />
   </svg>`;
 
-  naver.maps.Event.once(map, "init", function () {
+  naver.maps.Event.once(map, 'init', function () {
     var customControl = new naver.maps.CustomControl(locationBtnHtml, {
       position: naver.maps.Position.RIGHT_CENTER,
     });
@@ -55,7 +55,7 @@ function success(position) {
 
     naver.maps.Event.addDOMListener(
       customControl.getElement(),
-      "click",
+      'click',
       function () {
         map.setCenter(new naver.maps.LatLng(latitude, longitude));
       }
@@ -63,7 +63,7 @@ function success(position) {
   });
 
   // 상/하/좌/우 keydown 시 위치,반경 이동
-  naver.maps.Event.addListener(map, "keydown", (event) => {
+  naver.maps.Event.addListener(map, 'keydown', (event) => {
     const key = event.keyboardEvent.key;
     const { lat: newLat, lon: newLon } = calculateCoordinates(
       latlng._lat,
@@ -79,13 +79,13 @@ function success(position) {
   });
 
   // keyup 시 변경된 위치로 이동
-  naver.maps.Event.addListener(map, "keyup", (event) => {
+  naver.maps.Event.addListener(map, 'keyup', (event) => {
     map.panTo(latlng);
   });
 }
 
 function error() {
-  alert("Sorry, no position available.");
+  alert('Sorry, no position available.');
 }
 
 function calculateCoordinates(lat, lng, distance, direction) {
@@ -95,21 +95,21 @@ function calculateCoordinates(lat, lng, distance, direction) {
   let newLat, newLng;
 
   switch (direction) {
-    case "ArrowUp":
+    case 'ArrowUp':
       newLat = lat + distanceInRadians * (180 / Math.PI);
       newLng = lng;
       break;
-    case "ArrowDown":
+    case 'ArrowDown':
       newLat = lat - distanceInRadians * (180 / Math.PI);
       newLng = lng;
       break;
-    case "ArrowLeft":
+    case 'ArrowLeft':
       newLat = lat;
       newLng =
         lng -
         (distanceInRadians * (180 / Math.PI)) / Math.cos((lat * Math.PI) / 180);
       break;
-    case "ArrowRight":
+    case 'ArrowRight':
       newLat = lat;
       newLng =
         lng +
