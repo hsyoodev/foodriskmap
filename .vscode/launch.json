@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-FoodriskmapApplication<foodriskmap>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.hangaramit.foodriskmap.FoodriskmapApplication",
+            "projectName": "foodriskmap",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
