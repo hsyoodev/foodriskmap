@@ -1,5 +1,3 @@
-const API_KEY = '5206ab77eeb148fd9ba3';
-
 navigator.geolocation.getCurrentPosition(success, error);
 
 function success(position) {

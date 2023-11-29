@@ -6,81 +6,83 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
+import lombok.Builder;
 import org.hibernate.annotations.Comment;
 
 @Entity
+@Builder
 public class Restaurant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurant_seq")
     @SequenceGenerator(name = "restaurant_seq", sequenceName = "restaurant_seq", allocationSize = 1)
-    Integer id;
+    private Integer id;
 
     @Column
     @Comment("업소명")
-    String prcscitypointBsshnm;
+    private String prcscitypointBsshnm;
 
     @Column
     @Comment("업종")
-    String indutyCdNm;
+    private String indutyCdNm;
 
     @Column
     @Comment("인허가번호")
-    String lcnsNo;
+    private String lcnsNo;
 
     @Column
     @Comment("처분확정일자")
-    String dspsDcsndt;
+    private String dspsDcsndt;
 
     @Column
     @Comment("처분시작일(영업정지의경우)")
-    String dspsBgndt;
+    private String dspsBgndt;
 
     @Column
     @Comment("처분종료일(영업정지의경우)")
-    String dspsEnddt;
+    private String dspsEnddt;
 
     @Column
     @Comment("처분유형")
-    String dspsTypecdNm;
+    private String dspsTypecdNm;
 
-    @Column
+    @Column(length = 500)
     @Comment("위반일자및위반내용")
-    String viltcn;
+    private String viltcn;
 
     @Column
     @Comment("주소")
-    String addr;
+    private String addr;
 
     @Column
     @Comment("전화번호")
-    String telNo;
+    private String telNo;
 
     @Column
     @Comment("대표자명")
-    String prsdntNm;
+    private String prsdntNm;
 
     @Column
     @Comment("처분내용")
-    String dspscn;
+    private String dspscn;
 
     @Column
     @Comment("위반법령")
-    String lawordCdNm;
+    private String lawordCdNm;
 
     @Column
     @Comment("공개기한")
-    String publicDt;
+    private String publicDt;
 
     @Column
     @Comment("최종수정일")
-    String lastUpdtDtm;
+    private String lastUpdtDtm;
 
     @Column
     @Comment("처분기관명")
-    String dspsInsttcdNm;
+    private String dspsInsttcdNm;
 
     @Column
     @Comment("행정처분전산키")
-    String dspsDtlsSeq;
+    private String dspsDtlsSeq;
 }
