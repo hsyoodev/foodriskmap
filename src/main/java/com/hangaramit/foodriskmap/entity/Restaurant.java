@@ -6,11 +6,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Comment;
 
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Getter
 public class Restaurant {
 
     @Id
@@ -53,6 +61,14 @@ public class Restaurant {
     @Column
     @Comment("주소")
     private String addr;
+
+    @Column
+    @Comment("위도")
+    private String lat;
+
+    @Column
+    @Comment("경도")
+    private String lng;
 
     @Column
     @Comment("전화번호")

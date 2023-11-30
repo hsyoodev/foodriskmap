@@ -1,6 +1,6 @@
 navigator.geolocation.getCurrentPosition(success, error);
 
-function success(position) {
+async function success(position) {
   const lat = position.coords.latitude;
   const lng = position.coords.longitude;
   let latlng = new naver.maps.LatLng(lat, lng);
@@ -77,6 +77,24 @@ function success(position) {
       map.setCenter(new naver.maps.LatLng(lat, lng));
     });
   });
+
+  let response = await fetch('/api/restaurant/show');
+  const data = await response.json();
+  console.log(data);
+  // data.forEach(async (restaurant) => {
+  // const addr = restaurant.addr;
+  // const response = await fetch(
+  //   `https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=${addr}`,
+  //   {
+  //     method: 'GET',
+  //     headers: {
+  //       'X-NCP-APIGW-API-KEY-ID': 'dxkas2z55y',
+  //       'X-NCP-APIGW-API-KEY': 'wcNZKPlRmcDFMKOgAM0n1dxYRYJZwBeSMfRz24O5',
+  //     },
+  //   }
+  // );
+  // const data = await response.json();
+  // });
 }
 
 function error() {
