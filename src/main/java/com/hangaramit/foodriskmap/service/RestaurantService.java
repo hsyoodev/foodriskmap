@@ -30,9 +30,9 @@ public class RestaurantService {
         int endIdx = requestMaxRange;
 
         // ex) 1 ~ 1000
-        Map<String, Object> data = getData(startIdx, endIdx);
-        Map<String, Object> i2630 = (Map<String, Object>) data.get("I2630");
-        save(data);
+        Map<String, Object> results = getAdministrativeDispositionResults(startIdx, endIdx);
+        Map<String, Object> i2630 = (Map<String, Object>) results.get("I2630");
+        save(results);
 
         // ex) 4084
         int totalCount = Integer.parseInt(i2630.get("total_count").toString());
@@ -41,19 +41,24 @@ public class RestaurantService {
         startIdx += requestMaxRange;
         endIdx += requestMaxRange;
         while (startIdx <= totalCount && endIdx <= totalCount) {
-            data = getData(startIdx, endIdx);
-            save(data);
+            results = getAdministrativeDispositionResults(startIdx, endIdx);
+            save(results);
             startIdx += requestMaxRange;
             endIdx += requestMaxRange;
         }
 
         // ex) 4001 ~ 4084
         endIdx = startIdx + (totalCount - startIdx);
-        data = getData(startIdx, endIdx);
-        save(data);
+        results = getAdministrativeDispositionResults(startIdx, endIdx);
+        save(results);
     }
 
-    private Map<String, Object> getData(int startIdx, int endIdx) {
+    public List<Restaurant> show() {
+        return restaurantRepository.findAll();
+    }
+
+    // 행정처분결과(식품접객업) 반환 받는 API
+    private Map<String, Object> getAdministrativeDispositionResults(int startIdx, int endIdx) {
         final String URL = "https://openapi.foodsafetykorea.go.kr/api";
         final String keyId = "5206ab77eeb148fd9ba3";
         final String serviceId = "I2630";
@@ -61,15 +66,43 @@ public class RestaurantService {
         ResponseEntity<Object> responseEntity = restTemplate.getForEntity(
                 URL + "/" + keyId + "/" + serviceId + "/" + dataType + "/" + startIdx + "/" + endIdx,
                 Object.class);
-        Map<String, Object> data = (Map<String, Object>) responseEntity.getBody();
-        return data;
+        Map<String, Object> results = (Map<String, Object>) responseEntity.getBody();
+        return results;
+    }
+
+    // 지번 도로명을 좌표값으로 반환 받는 API
+    private Map<String, Object> getCoordinatesByAddress(Map<String, String> row) {
+        final String addr = row.get("ADDR");
+        final String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + addr;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-NCP-APIGW-API-KEY-ID", "dxkas2z55y");
+        headers.set("X-NCP-APIGW-API-KEY", "wcNZKPlRmcDFMKOgAM0n1dxYRYJZwBeSMfRz24O5");
+        HttpEntity httpEntity = new HttpEntity(headers);
+        ResponseEntity<Object> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                httpEntity,
+                Object.class);
+        Map<String, Object> results = (Map<String, Object>) responseEntity.getBody();
+        return results;
+    }
+
+    private void setCoordinates(Map<String, String> row) {
+        Map<String, Object> results = getCoordinatesByAddress(row);
+        List<Map<String, Object>> addresses = ((List<Map<String, Object>>) results.get("addresses"));
+        if (!addresses.isEmpty()) {
+            String lng = addresses.get(0).get("x").toString();
+            String lat = addresses.get(0).get("y").toString();
+            row.put("LNG", lng);
+            row.put("LAT", lat);
+        }
     }
 
     private void save(Map<String, Object> data) {
         Map<String, Object> i2630 = (Map<String, Object>) data.get("I2630");
         List<Map<String, String>> rows = (List<Map<String, String>>) i2630.get("row");
         for (Map<String, String> row : rows) {
-            setCoordinate(row);
+            setCoordinates(row);
             Restaurant restaurant = Restaurant.builder()
                     .prcscitypointBsshnm(row.get("PRCSCITYPOINT_BSSHNM"))
                     .indutyCdNm(row.get("INDUTY_CD_NM"))
@@ -93,28 +126,6 @@ public class RestaurantService {
                     .build();
 
             restaurantRepository.save(restaurant);
-        }
-    }
-
-    private void setCoordinate(Map<String, String> row) {
-        String addr = row.get("ADDR");
-        String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + addr;
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("X-NCP-APIGW-API-KEY-ID", "dxkas2z55y");
-        headers.set("X-NCP-APIGW-API-KEY", "wcNZKPlRmcDFMKOgAM0n1dxYRYJZwBeSMfRz24O5");
-        HttpEntity httpEntity = new HttpEntity(headers);
-        ResponseEntity<Object> responseEntity = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                httpEntity,
-                Object.class);
-        Map<String, Object> data = (Map<String, Object>) responseEntity.getBody();
-        List<Map<String, Object>> addresses = ((List<Map<String, Object>>) data.get("addresses"));
-        if (!addresses.isEmpty()) {
-            String lng = addresses.get(0).get("x").toString();
-            String lat = addresses.get(0).get("y").toString();
-            row.put("LNG", lng);
-            row.put("LAT", lat);
         }
     }
 }
