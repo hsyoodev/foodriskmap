@@ -38,6 +38,9 @@ async function success(position) {
     circle.setCenter(latlng);
     radius.setCenter(latlng);
   });
+  naver.maps.Event.addListener(map, 'keyup', () => {
+    map.panTo(latlng);
+  });
   // 클릭한 지점으로 원(도형),반경 이동
   naver.maps.Event.addListener(map, 'click', (event) => {
     latlng = event.coord;
@@ -45,13 +48,8 @@ async function success(position) {
     circle.setCenter(latlng);
     radius.setCenter(latlng);
   });
-  // 이동한 위치로 지도를 부드럽게 이동
-  naver.maps.Event.addListener(map, 'keyup', () => {
-    map.panTo(latlng);
-  });
-  // 버튼 추가
+  // 로고, 게시판, 위치 버튼 추가
   naver.maps.Event.once(map, 'init', () => {
-    const bounds = map.getBounds();
     const locationButtonHtml = `<button type="button" class="p-1 bg-rose-500 hover:bg-rose-600 mr-2">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -108,10 +106,12 @@ async function success(position) {
     const boardButtonControl = new naver.maps.CustomControl(boardButtonHtml, {
       position: naver.maps.Position.TOP_RIGHT,
     });
+    const bounds = map.getBounds();
 
     locationButtonControl.setMap(map);
     logoButtonControl.setMap(map);
     boardButtonControl.setMap(map);
+
     naver.maps.Event.addDOMListener(
       locationButtonControl.getElement(),
       'click',
@@ -124,37 +124,111 @@ async function success(position) {
       }
     );
   });
-  // 지도가 움직이면
-  // 보이는 영역은 마커 생성
-  // 벗어난 영역은 마커 숨김
-  naver.maps.Event.addListener(map, 'idle', async () => {
-    updateMarkers(map, markers);
-  });
 
   // 행정처분결과(식품접객업) 반환 받는 API
-  const response = await fetch('/api/restaurant/show');
+  const response = await fetch('/api/restaurants');
   const restaurants = await response.json();
-  const backdrop = document.querySelector('#backdrop');
-  const markers = [];
+  const distinctRestaurants = await restaurants.filter((r1, idx1) => {
+    const name1 = r1.prcscitypointBsshnm;
+    const lat1 = r1.lat;
+    const lng1 = r1.lng;
+    const idx2 = restaurants.findIndex((r2) => {
+      const name2 = r2.prcscitypointBsshnm;
+      const lat2 = r2.lat;
+      const lng2 = r2.lng;
+
+      return name1 === name2 && lat1 === lat2 && lng1 === lng2;
+    });
+
+    return idx1 === idx2;
+  });
+  console.log(distinctRestaurants);
 
   // 마커 생성
-  for (const restaurant of restaurants) {
+  const markers = [];
+  const inforWindows = [];
+
+  for (const restaurant of distinctRestaurants) {
     const name = restaurant.prcscitypointBsshnm;
     const lat = restaurant.lat;
     const lng = restaurant.lng;
+    const count = restaurants.filter(
+      (r) => r.prcscitypointBsshnm === name
+    ).length;
 
     if (lat !== null && lng !== null) {
       const marker = new naver.maps.Marker({
         position: new naver.maps.LatLng(lat, lng),
         title: name,
+        icon: {
+          url: '/images/marker.png',
+          size: new naver.maps.Size(25, 34),
+          scaledSize: new naver.maps.Size(25, 34),
+          origin: new naver.maps.Point(0, 0),
+          anchor: new naver.maps.Point(12, 34),
+        },
       });
+      const infoWindow = new naver.maps.InfoWindow({
+        content: `<div class="p-2">
+                    <div class="flex justify-center items-center space-x-4">
+                      <p class="font-bold">${name}</p>
+                      <button type="button" class="text-white bg-rose-500 hover:bg-rose-600 font-medium rounded-full text-sm text-center p-2">자세히보기</button>
+                    </div>
+                  </div>`,
+      });
+
       markers.push(marker);
+      inforWindows.push(infoWindow);
+
+      naver.maps.Event.addListener(marker, 'click', () => {
+        if (infoWindow.getMap()) {
+          infoWindow.close();
+        } else {
+          infoWindow.open(map, marker);
+        }
+      });
     }
   }
 
-  // 지도에 마커 표시
-  updateMarkers(map, markers);
+  // 클러스터링
+  const htmlMarker1 = {
+    content:
+      '<button type="button" class="text-white bg-red-300 hover:bg-red-400 font-medium rounded-full text-sm w-10 h-10 text-center"></button>',
+  };
+  const htmlMarker2 = {
+    content:
+      '<button type="button" class="text-white bg-red-400 hover:bg-red-500 font-medium rounded-full text-sm w-10 h-10 text-center"></button>',
+  };
+  const htmlMarker3 = {
+    content:
+      '<button type="button" class="text-white bg-red-500 hover:bg-red-600 font-medium rounded-full text-sm w-10 h-10 text-center"></button>',
+  };
+  const htmlMarker4 = {
+    content:
+      '<button type="button" class="text-white bg-red-600 hover:bg-red-700 font-medium rounded-full text-sm w-10 h-10 text-center"></button>',
+  };
+  const htmlMarker5 = {
+    content:
+      '<button type="button" class="text-white bg-red-700 hover:bg-red-800 font-medium rounded-full text-sm w-10 h-10 text-center"></button>',
+  };
+  const markerClustering = new MarkerClustering({
+    minClusterSize: 2,
+    maxZoom: 13,
+    map: map,
+    markers: markers,
+    disableClickZoom: false,
+    gridSize: 120,
+    icons: [htmlMarker1, htmlMarker2, htmlMarker3, htmlMarker4, htmlMarker5],
+    indexGenerator: [10, 100, 200, 500, 1000],
+    stylingFunction: (clusterMarker, count) => {
+      clusterMarker.getElement().querySelector('button:first-child').innerText =
+        count;
+    },
+  });
+
   // 로딩 종료
+  const backdrop = document.querySelector('#backdrop');
+
   backdrop.remove();
 }
 
@@ -192,26 +266,4 @@ function calculateCoordinates(lat, lng, distance, direction) {
   }
 
   return { lat: newLat, lon: newLng };
-}
-
-function updateMarkers(map, markers) {
-  const bounds = map.getBounds();
-
-  for (const marker of markers) {
-    const position = marker.getPosition();
-
-    if (bounds.hasLatLng(position)) {
-      showMarker(map, marker);
-      continue;
-    }
-    hideMarker(marker);
-  }
-}
-
-function showMarker(map, marker) {
-  marker.setMap(map);
-}
-
-function hideMarker(marker) {
-  marker.setMap(null);
 }

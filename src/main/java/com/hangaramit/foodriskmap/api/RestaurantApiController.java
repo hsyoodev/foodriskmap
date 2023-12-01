@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@RequestMapping("/api/restaurant")
+@RequestMapping("/api/restaurants")
 @RestController
 public class RestaurantApiController {
 
@@ -21,9 +21,9 @@ public class RestaurantApiController {
     //    public void create() {
     //        restaurantService.add();
     //    }
-    @GetMapping("/show")
-    public List<Restaurant> show() {
-        return restaurantService.show();
+    @GetMapping("")
+    public List<Restaurant> index() {
+        return restaurantService.index();
     }
 }
 

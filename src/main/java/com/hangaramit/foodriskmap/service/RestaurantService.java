@@ -53,8 +53,8 @@ public class RestaurantService {
         save(results);
     }
 
-    public List<Restaurant> show() {
-        return restaurantRepository.findAll();
+    public List<Restaurant> index() {
+        return restaurantRepository.findByLatIsNotNullAndLngIsNotNull();
     }
 
     // 행정처분결과(식품접객업) 반환 받는 API
