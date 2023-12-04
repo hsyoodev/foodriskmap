@@ -16,14 +16,14 @@ public class RestaurantServiceTests {
     @Autowired
     RestaurantService restaurantService;
 
-    @DisplayName("식당 생성")
+    @DisplayName("업소 추가")
     @Test
     @Transactional
     void add() {
         restaurantService.add();
     }
 
-    @DisplayName("식당 조회")
+    @DisplayName("업소 조회")
     @Test
     @Transactional
     void index() {

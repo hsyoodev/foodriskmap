@@ -4,6 +4,7 @@ import com.hangaramit.foodriskmap.entity.Restaurant;
 import com.hangaramit.foodriskmap.repository.RestaurantRepository;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -24,6 +25,7 @@ public class RestaurantService {
     @Autowired
     RestaurantRepository restaurantRepository;
 
+    @Transactional
     public void add() {
         final int requestMaxRange = 1000;
         int startIdx = 1;
@@ -90,7 +92,7 @@ public class RestaurantService {
     private void setCoordinates(Map<String, String> row) {
         Map<String, Object> results = getCoordinatesByAddress(row);
         List<Map<String, Object>> addresses = ((List<Map<String, Object>>) results.get("addresses"));
-        if (!addresses.isEmpty()) {
+        if (!Objects.isNull(addresses)) {
             String lng = addresses.get(0).get("x").toString();
             String lat = addresses.get(0).get("y").toString();
             row.put("LNG", lng);
