@@ -4,6 +4,7 @@ async function success(position) {
   const lat = position.coords.latitude;
   const lng = position.coords.longitude;
   let latlng = new naver.maps.LatLng(lat, lng);
+  let infoWindowTemp = new naver.maps.InfoWindow();
   const map = new naver.maps.Map('map', {
     center: latlng,
     zoom: 14,
@@ -45,6 +46,7 @@ async function success(position) {
   naver.maps.Event.addListener(map, 'click', (event) => {
     latlng = event.coord;
 
+    infoWindowTemp.close();
     circle.setCenter(latlng);
     radius.setCenter(latlng);
   });
@@ -118,6 +120,7 @@ async function success(position) {
       () => {
         latlng = new naver.maps.LatLng(lat, lng);
 
+        infoWindowTemp.close();
         circle.setCenter(latlng);
         radius.setCenter(latlng);
         map.panToBounds(bounds);
@@ -142,7 +145,6 @@ async function success(position) {
 
     return idx1 === idx2;
   });
-  console.log(distinctRestaurants);
 
   // 마커 생성
   const markers = [];
@@ -150,11 +152,15 @@ async function success(position) {
 
   for (const restaurant of distinctRestaurants) {
     const name = restaurant.prcscitypointBsshnm;
+    const addrs = restaurant.addr.split('(');
     const lat = restaurant.lat;
     const lng = restaurant.lng;
-    const count = restaurants.filter(
-      (r) => r.prcscitypointBsshnm === name
-    ).length;
+    const viltcns = restaurants.filter((r) => r.prcscitypointBsshnm === name);
+    let liHtml = '';
+
+    for (const viltcn of viltcns) {
+      liHtml += `<li>${viltcn.viltcn}</li>`;
+    }
 
     if (lat !== null && lng !== null) {
       const marker = new naver.maps.Marker({
@@ -170,17 +176,25 @@ async function success(position) {
       });
       const infoWindow = new naver.maps.InfoWindow({
         content: `<div class="p-2">
-                    <div class="flex justify-center items-center space-x-4">
-                      <p class="font-bold">${name}</p>
-                      <button type="button" class="text-white bg-rose-500 hover:bg-rose-600 font-medium rounded-full text-sm text-center p-2">자세히보기</button>
+                    <p class="font-bold text-lg">${name}</p>
+                    <p class="text-xs">${addrs[0]}</p>
+                    <p class="text-xs">(${addrs[1]}</p>
+                    <div class="py-2">
+                      <p class="font-bold">위반일자 및 위반내용</p>
+                      <ul class="list-disc px-5">
+                        ${liHtml}
+                      </ul>
                     </div>
                   </div>`,
+        maxWidth: 320,
       });
 
       markers.push(marker);
       inforWindows.push(infoWindow);
 
       naver.maps.Event.addListener(marker, 'click', () => {
+        infoWindowTemp = infoWindow;
+
         if (infoWindow.getMap()) {
           infoWindow.close();
         } else {
