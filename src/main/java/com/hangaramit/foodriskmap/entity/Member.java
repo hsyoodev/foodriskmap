@@ -1,6 +1,5 @@
 package com.hangaramit.foodriskmap.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,14 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import lombok.Data;
 
-
-@SequenceGenerator(name = "MEMBER_SEQ", allocationSize = 1)
+// @SequenceGenerator(name = "MEMBER_SEQ", allocationSize = 1)
 @Entity
 @Data
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ")
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ")
+    @GeneratedValue
     private Long id;
 
     @Column(length = 255)

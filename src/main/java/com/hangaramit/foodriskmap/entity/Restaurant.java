@@ -14,19 +14,24 @@ import lombok.ToString;
 import org.hibernate.annotations.Comment;
 
 @Entity
-//@Table(name = "RESTAURANT2")
+// @Table(name = "RESTAURANT2")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
-@SequenceGenerator(name = "RESTAURANT_SEQ_GEN", sequenceName = "RESTAURANT_SEQ", allocationSize = 500)
-//@SequenceGenerator(name = "RESTAURANT2_SEQ_GEN", sequenceName = "RESTAURANT2_SEQ", allocationSize = 500)
+// @SequenceGenerator(name = "RESTAURANT_SEQ_GEN", sequenceName =
+// "RESTAURANT_SEQ", allocationSize = 500)
+// @SequenceGenerator(name = "RESTAURANT2_SEQ_GEN", sequenceName =
+// "RESTAURANT2_SEQ", allocationSize = 500)
 public class Restaurant {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RESTAURANT_SEQ_GEN")
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RESTAURANT2_SEQ_GEN")
+    @GeneratedValue
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "RESTAURANT_SEQ_GEN")
+    // @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+    // "RESTAURANT2_SEQ_GEN")
     private Integer id;
 
     @Column
