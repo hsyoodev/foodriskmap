@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+
+
+<head >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <div th:replace="common/sidebar" class="sidebar"></div>
+
+</head>
+
+
+
+
+<body>
+
+    <link rel="stylesheet" href="/css/sidebar.css">
+
+<div style="width: 800px; height: 500px; margin-left: 800px; margin-top: 150px;">
+    <form class="pure-form" id="containering" method="post" action="/board/write" enctype="multipart/form-data">
+    <label for="multi-first-name">제목</label>
+    <br>
+
+    <input type="text" class="pure-input-2-3" id="title" name="title" placeholder="제목 작성...." />
+    
+    <br>
+    <br />
+    <label for="multi-first-name">내용</label>
+    <br>
+    <textarea type="text" class="pure-input-2-3" style="resize: vertical; height: 300px;" name="content" id="content" placeholder="여기에 작성 ...." ></textarea>
+
+        <br><br><br>
+    <button class="pure-button pure-button-primary" id="complete">글쓰기</button>
+
+</div>
+
+
+</body>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+
+    if (error === 'true') {
+        alert('글이 작성되지 않았습니다.');
+    }
+</script>
+
+</html>

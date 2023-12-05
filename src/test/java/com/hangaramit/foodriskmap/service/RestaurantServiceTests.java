@@ -18,7 +18,7 @@ public class RestaurantServiceTests {
 
     @DisplayName("업소 추가")
     @Test
-    @Transactional
+//    @Transactional
     void add() {
         restaurantService.add();
     }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+
+
+<head >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <div th:replace="common/sidebar" class="sidebar"></div>
+
+</head>
+
+
+
+
+<body>
+
+    <link rel="stylesheet" href="/css/sidebar.css">
+
+<div style="width: 800px; height: 500px; margin-left: 800px; margin-top: 150px;">
+    <form class="pure-form" id="containering" method="post" th:action="@{/board/update/} + ${board.id}" enctype="multipart/form-data">
+    <label for="multi-first-name">제목</label>
+    <br>
+    <input type="text" class="pure-input-2-3" id="title" name="title" th:value="${board.title}" />
+    
+    <br>
+    <br />
+    <label for="multi-first-name">내용</label>
+    <br>
+    <textarea type="text" class="pure-input-2-3" style="resize: vertical; height: 300px;" name="content" id="content">[[ ${board.content} ]]</textarea>
+
+        <br><br><br>
+    <button class="pure-button pure-button-primary" id="complete">수정완료</button>
+</div>
+
+
+
+</body>
+
+</html>

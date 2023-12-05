@@ -20,8 +20,8 @@ import org.hibernate.annotations.Comment;
 @AllArgsConstructor
 @ToString
 @Getter
-@SequenceGenerator(name = "RESTAURANT_SEQ_GEN", sequenceName = "RESTAURANT_SEQ", allocationSize = 1)
-//@SequenceGenerator(name = "RESTAURANT2_SEQ_GEN", sequenceName = "RESTAURANT2_SEQ", allocationSize = 100)
+@SequenceGenerator(name = "RESTAURANT_SEQ_GEN", sequenceName = "RESTAURANT_SEQ", allocationSize = 500)
+//@SequenceGenerator(name = "RESTAURANT2_SEQ_GEN", sequenceName = "RESTAURANT2_SEQ", allocationSize = 500)
 public class Restaurant {
 
     @Id

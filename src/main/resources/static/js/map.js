@@ -77,7 +77,7 @@ async function success(position) {
                                 <span>FoodRiskMap</span>
                               </div>
                             </a>`;
-    const boardButtonHtml = `<a href="/board">
+    const boardButtonHtml = `<a href="/board/list">
                               <div class="flex space-x-2 rounded-full text-white bg-rose-600 hover:bg-rose-700 hover:cursor-pointer font-bold m-2 p-2">
                                 <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -130,12 +130,12 @@ async function success(position) {
 
   // 행정처분결과(식품접객업) 반환 받는 API
   const response = await fetch('/api/restaurants');
-  const restaurants = await response.json();
-  const distinctRestaurants = await restaurants.filter((r1, idx1) => {
+  const data = await response.json();
+  const restaurants = await data.filter((r1, idx1) => {
     const name1 = r1.prcscitypointBsshnm;
     const lat1 = r1.lat;
     const lng1 = r1.lng;
-    const idx2 = restaurants.findIndex((r2) => {
+    const idx2 = data.findIndex((r2) => {
       const name2 = r2.prcscitypointBsshnm;
       const lat2 = r2.lat;
       const lng2 = r2.lng;
@@ -150,12 +150,12 @@ async function success(position) {
   const markers = [];
   const inforWindows = [];
 
-  for (const restaurant of distinctRestaurants) {
+  for (const restaurant of restaurants) {
     const name = restaurant.prcscitypointBsshnm;
-    const addrs = restaurant.addr.split('(');
+    const addr = restaurant.addr;
     const lat = restaurant.lat;
     const lng = restaurant.lng;
-    const viltcns = restaurants.filter((r) => r.prcscitypointBsshnm === name);
+    const viltcns = data.filter((r) => r.prcscitypointBsshnm === name);
     let liHtml = '';
 
     for (const viltcn of viltcns) {
@@ -177,8 +177,7 @@ async function success(position) {
       const infoWindow = new naver.maps.InfoWindow({
         content: `<div class="p-2">
                     <p class="font-bold text-lg">${name}</p>
-                    <p class="text-xs">${addrs[0]}</p>
-                    <p class="text-xs">(${addrs[1]}</p>
+                    <p class="text-xs">${addr}</p>
                     <div class="py-2">
                       <p class="font-bold">위반일자 및 위반내용</p>
                       <ul class="list-disc px-5">

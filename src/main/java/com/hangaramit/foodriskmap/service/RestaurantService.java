@@ -92,7 +92,7 @@ public class RestaurantService {
     private void setCoordinates(Map<String, String> row) {
         Map<String, Object> results = getCoordinatesByAddress(row);
         List<Map<String, Object>> addresses = ((List<Map<String, Object>>) results.get("addresses"));
-        if (!Objects.isNull(addresses)) {
+        if (!Objects.isNull(addresses) && !addresses.isEmpty()) {
             String lng = addresses.get(0).get("x").toString();
             String lat = addresses.get(0).get("y").toString();
             row.put("LNG", lng);
