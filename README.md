@@ -2,9 +2,9 @@
 
 [식품의약품안전에 관한 법령](https://www.mfds.go.kr/brd/m_203/list.do)을 위반한 식당을 제공하는 웹 서비스입니다.
 
-페이지 화면 gif 형식
+![foodriskmap](https://github.com/hsyoodev/foodriskmap/assets/102946491/537eb325-59a4-414b-9814-e03a0193b1a0)
 
-Demo👉 [https://hsyoodev.github.io/hanflix](https://port-0-foodriskmap-32updzt2alprv5o7g.sel4.cloudtype.app/)
+Demo👉 https://port-0-foodriskmap-32updzt2alprv5o7g.sel4.cloudtype.app/
 
 ## ⛏️ 개발 환경
 
@@ -28,45 +28,45 @@ Demo👉 [https://hsyoodev.github.io/hanflix](https://port-0-foodriskmap-32updzt
 
 ### API
 
-![Static Badge](https://img.shields.io/badge/-kobis-%239999FF?style=for-the-badge&labelColor=abcdef) ![Static Badge](https://img.shields.io/badge/-kmdb-%23512BD4?style=for-the-badge)
+![Static Badge](https://img.shields.io/badge/-web%20dynamic%20map-%2303C75A?style=for-the-badge&logo=naver&labelColor=abcdef)
+![Static Badge](https://img.shields.io/badge/-geocoding-%2303C75A?style=for-the-badge&logo=naver&labelColor=abcdef)
 
 ## 📁 패키지 구조
 
 ```bash
-📦hanflix
- ┣ 📂css
- ┃ ┣ 📜common.css
- ┃ ┣ 📜details.css
- ┃ ┣ 📜index.css
- ┃ ┗ 📜search.css
- ┣ 📂images
- ┃ ┣ 📜hanflix.gif
- ┃ ┗ 📜xbox.png
- ┣ 📂js
- ┃ ┣ 📜details.js
- ┃ ┣ 📜index.js
- ┃ ┗ 📜search.js
- ┣ 📜details.html
- ┣ 📜index.html
- ┗ 📜search.html
+📦foodriskmap
+ ┣ 📂api
+ ┣ 📂config
+ ┣ 📂controller
+ ┣ 📂entity
+ ┣ 📂interceptor
+ ┣ 📂repository
+ ┣ 📂service
+ ┗ 📜FoodriskmapApplication.java
 ```
 
-## 👀 Main Feature
+## 👀 주요 기능
 
-### 영화 제공
+### 식당 검색
 
-국내 주간/일별 박스오피스, 개봉작, 개봉 예정작을 제공하고 있습니다.
+* 사용자는 지도를 통해 식품의약품안전에 관한 법령을 위반한 식당 정보를 얻을 수 있다.
+* 사용자는 자신의 현재 위치 및 주변 반경을 확인할 수 있다.
 
-![Alt text](https://github.com/hsyoodev/hanflix/assets/102946491/ecb34256-ecbf-4458-8d59-4a226a3e1ea8)
+  ![map](https://github.com/hsyoodev/foodriskmap/assets/102946491/d9e08e22-8891-4b85-953e-1fffcdc30df1)
 
-### 영화 상세정보 제공
+### 회원가입 및 로그인
 
-개봉일, 상영시간, 줄거리, 스틸컷, 예고편 등을 제공합니다.
+* 사용자는 이메일, 비밀번호를 입력하여 회원가입을 할 수 있다.
+* 이미 존재하는 이메일로의 중복 가입을 방지한다.
+* 사용자는 이메일과 비밀번호를 입력하여 로그인을 할 수 있다.
+* 사용자가 입력한 정보의 유효성을 검사하여 올바른 정보를 입력하도록 안내한다.
+* 로그인 실패 시 사용자에게 오류 메세지를 보여주고, 다시 로그인을 시도하도록 안내한다.
+* 로그인 성공 시 사용자에게 세션을 부여하여 로그인 상태를 유지한다.
 
-![Alt text](https://github.com/hsyoodev/hanflix/assets/102946491/05ec0c93-c1ca-4660-94a2-9633518012ac)
+  ![login](https://github.com/hsyoodev/foodriskmap/assets/102946491/f22691bc-4418-407b-9322-af45cd1da162)
 
-### 영화 검색결과 제공
+### 제보 게시판
 
-검색어와 관련된 영화를 제공합니다.
+* 사용자는 자신이 발견한 식품의약품안전에 관한 법령을 위반한 식당을 제보할 수 있다.
 
-![Alt text](https://github.com/hsyoodev/hanflix/assets/102946491/75ed9557-0f71-4f1a-9f9a-81162a09f5bd)
+![board](https://github.com/hsyoodev/foodriskmap/assets/102946491/08298591-add0-468e-8506-19c1bae68ce6)
