@@ -1,4 +1,4 @@
-# 🥘 FOODRISKMAP
+# 🥘 FoodRiskMap
 
 [식품의약품안전에 관한 법령](https://www.mfds.go.kr/brd/m_203/list.do)을 위반한 식당을 제공하는 웹 서비스입니다.
 
