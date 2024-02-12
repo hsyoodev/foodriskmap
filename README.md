@@ -1,6 +1,6 @@
 # 🥘 FoodRiskMap
 
-[식품의약품안전에 관한 법령](https://www.mfds.go.kr/brd/m_203/list.do)을 위반한 식당을 제공하는 웹 서비스입니다.
+[식품의약품안전에 관한 법령](https://www.mfds.go.kr/brd/m_203/list.do)을 위반한 식당을 제공하는 서비스입니다.
 
 ![foodriskmap](https://github.com/hsyoodev/foodriskmap/assets/102946491/537eb325-59a4-414b-9814-e03a0193b1a0)
 
