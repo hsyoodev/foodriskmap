@@ -6,7 +6,7 @@
 
 Demo👉 https://port-0-foodriskmap-32updzt2alprv5o7g.sel4.cloudtype.app/
 
-## ⛏️ 개발 환경
+## ⛏️ 기술 스택
 
 ### Backend
 
