@@ -1,6 +1,6 @@
-# 🥘 FoodRiskMap
+# 🥘 FoodRiskMap / 식품 안전 지킴이 서비스
 
-[식품의약품안전에 관한 법령](https://www.mfds.go.kr/brd/m_203/list.do)을 위반한 식당을 제공하는 서비스입니다.
+[식의약 법령](https://www.mfds.go.kr/brd/m_203/list.do)을 위반한 업소를 제공하는 웹 서비스
 
 ![foodriskmap](https://github.com/hsyoodev/foodriskmap/assets/102946491/537eb325-59a4-414b-9814-e03a0193b1a0)
 
@@ -11,16 +11,15 @@ Demo👉 https://port-0-foodriskmap-32updzt2alprv5o7g.sel4.cloudtype.app/
 ### Backend
 
 ![Static Badge](https://img.shields.io/badge/-Java-%23007396?style=for-the-badge&logo=java&logoColor=white)
+![Static Badge](https://img.shields.io/badge/-apache%20maven-%23C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/-spring%20boot-%236DB33F?style=for-the-badge&logo=springboot&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/-spring%20data%20jpa-%236DB33F?style=for-the-badge&logo=springdatajpa&logoColor=white)
-![Static Badge](https://img.shields.io/badge/-spring%20security-%236DB33F?style=for-the-badge&logo=springsecurity&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/-thymeleaf-%23005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white)
-![Static Badge](https://img.shields.io/badge/-mariadb-%23003545?style=for-the-badge&logo=mariadb&logoColor=white)
-![Static Badge](https://img.shields.io/badge/-apache%20maven-%23C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
 
-### Infra
+### DevOps
 
 ![Static Badge](https://img.shields.io/badge/-cloudetype-%23000000?style=for-the-badge&logo=cloudetype&logoColor=white)
+![Static Badge](https://img.shields.io/badge/-mariadb-%23003545?style=for-the-badge&logo=mariadb&logoColor=white)
 
 ### IDE
 
@@ -47,10 +46,9 @@ Demo👉 https://port-0-foodriskmap-32updzt2alprv5o7g.sel4.cloudtype.app/
 
 ## 👀 주요 기능
 
-### 식당 검색
+### 위반업소 제공
 
-* 사용자는 지도를 통해 식품의약품안전에 관한 법령을 위반한 식당 정보를 얻을 수 있다.
-* 사용자는 자신의 현재 위치 및 주변 반경을 확인할 수 있다.
+* 사용자는 지도를 통해 내 주변 위반업소를 확인할 수 있다.
 
   ![map](https://github.com/hsyoodev/foodriskmap/assets/102946491/d9e08e22-8891-4b85-953e-1fffcdc30df1)
 
@@ -67,6 +65,6 @@ Demo👉 https://port-0-foodriskmap-32updzt2alprv5o7g.sel4.cloudtype.app/
 
 ### 제보 게시판
 
-* 사용자는 자신이 발견한 식품의약품안전에 관한 법령을 위반한 식당을 제보할 수 있다.
+* 사용자는 자신이 발견한 위반업소를 제보할 수 있다.
 
 ![board](https://github.com/hsyoodev/foodriskmap/assets/102946491/08298591-add0-468e-8506-19c1bae68ce6)
