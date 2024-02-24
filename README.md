@@ -1,6 +1,6 @@
 # 🥘 FoodRiskMap / 식품 안전 지킴이 서비스
 
-[식의약 법령](https://www.mfds.go.kr/law/main.do)을 위반한 업소를 제공하는 웹 서비스
+사용자에게 [식의약 법령](https://www.mfds.go.kr/law/main.do)을 위반한 업소를 제공하는 웹 서비스
 
 ![foodriskmap](https://github.com/hsyoodev/foodriskmap/assets/102946491/537eb325-59a4-414b-9814-e03a0193b1a0)
 
